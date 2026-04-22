@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdvocateIQ — Community Intelligence That Closes Deals</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f1117;
+      --ink-muted: #5a5f72;
+      --surface: #ffffff;
+      --surface-2: #f7f8fc;
+      --surface-3: #eef0f8;
+      --accent: #4f46e5;
+      --accent-light: #ede9fe;
+      --accent-dark: #3730a3;
+      --green: #059669;
+      --green-light: #d1fae5;
+      --border: #e2e5f0;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+    }
+
+    .logo span { color: var(--ink); }
+
+    nav ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    nav ul li a {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    nav ul li a:hover { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem !important;
+      transition: background 0.15s !important;
+    }
+
+    .nav-cta:hover { background: var(--accent-dark) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 96px 32px 80px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--ink-muted);
+      max-width: 620px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.15s, transform 0.1s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SOCIAL PROOF BAR ── */
+    .social-proof {
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .proof-label {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .proof-logos {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .proof-logos span {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #9ca3af;
+      letter-spacing: -0.3px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 96px 48px;
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--ink-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── PROBLEM ── */
+    .problem { background: var(--ink); color: #fff; }
+
+    .problem h2 { color: #fff; }
+
+    .problem .section-label { color: #a5b4fc; }
+
+    .problem .section-sub { color: #9ca3af; max-width: 640px; }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .pain-card {
+      background: #1a1d2e;
+      border: 1px solid #2d3150;
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .pain-icon {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+    }
+
+    .pain-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #e5e7eb;
+    }
+
+    .pain-card p {
+      font-size: 0.88rem;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* ── FEATURES ── */
+    .features { background: var(--surface); }
+
+    .feature-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      margin-top: 72px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .feature-row.reverse { direction: rtl; }
+    .feature-row.reverse > * { direction: ltr; }
+
+    .feature-text h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .feature-text p {
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .feature-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+    }
+
+    .feature-bullets li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feature-visual {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mock-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+
+    .mock-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+
+    .mock-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .mock-delta {
+      font-size: 0.8rem;
+      color: var(--green);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .mock-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mock-quote {
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-size: 0.85rem;
+      color: var(--accent-dark);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .mock-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .mock-tag {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+    }
+
+    .mock-play {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mock-play-text { font-size: 0.85rem; font-weight: 600; }
+    .mock-play-sub { font-size: 0.75rem; color: var(--ink-muted); margin-top: 2px; }
+
+    .badge-green {
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    /* ── METRICS ── */
+    .metrics { background: var(--surface-2); }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 56px;
+    }
+
+    .metric-cell {
+      background: var(--surface);
+      padding: 36px 28px;
+      text-align: center;
+    }
+
+    .metric-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--surface); }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .testimonial-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .testimonial-card blockquote {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    .testimonial-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .meta-name { font-size: 0.9rem; font-weight: 700; }
+    .meta-role { font-size: 0.8rem; color: var(--ink-muted); }
+
+    .stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 4px; }
+
+    /* ── USE CASES ── */
+    .use-cases { background: var(--surface-2); }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .use-case-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+
+    .use-case-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .use-case-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .use-case-card p {
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      line-height: 1.65;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 96px 48px;
+    }
+
+    .cta-section h2 {
+      color: #fff;
+      max-width: 640px;
+      margin: 0 auto 16px;
+    }
+
+    .cta-section p {
+      color: #c7d2fe;
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--accent);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: transform 0.1s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-white:hover { transform: translateY(-1px); }
+
+    .btn-outline-white {
+      background: transparent;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .btn-outline-white:hover { border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: #9ca3af;
+      padding: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 16px;
+    }
+
+    footer .logo { color: #a5b4fc; }
+    footer .logo span { color: #fff; }
+
+    footer p { font-size: 0.82rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      nav ul { display: none; }
+      section { padding: 64px 24px; }
+      .feature-row { grid-template-columns: 1fr; gap: 32px; }
+      .feature-row.reverse { direction: ltr; }
+      .social-proof { padding: 20px 24px; gap: 16px; }
+      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Advocate<span>IQ</span></div>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#use-cases">Use Cases</a></li>
+    <li><a href="#testimonials">Customers</a></li>
+    <li><a href="#" class="nav-cta">Get a Demo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">Community Intelligence Platform</div>
+  <h1>Turn advocate signals into<br /><em>revenue plays</em></h1>
+  <p class="hero-sub">
+    AdvocateIQ helps Community Insights Analysts synthesize quantitative and qualitative intelligence from their superadvocate communities — and push it directly into pre-sales and post-sales workflows.
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary">Get a Demo</button>
+    <button class="btn-ghost">See How It Works</button>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<div class="social-proof">
+  <span class="proof-label">Trusted by insight teams at</span>
+  <div class="proof-logos">
+    <span>Gainsight</span>
+    <span>Salesforce</span>
+    <span>HubSpot</span>
+    <span>Zendesk</span>
+    <span>Intercom</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-inner">
+    <div class="section-label">The Problem</div>
+    <h2>Your community is full of intelligence.<br />Almost none of it reaches the field.</h2>
+    <p class="section-sub">
+      Community Insights Analysts are drowning in signals — and still getting asked "do you have a customer reference for this?" five minutes before a call.
+    </p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📊</div>
+        <h3>Insight hoarding</h3>
+        <p>Beautiful reports get shared in a Slack channel, skimmed once, and forgotten. Reps close deals without the intelligence that exists two clicks away.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔥</div>
+        <h3>Advocate burnout</h3>
+        <p>Sales taps the same five advocates for every reference call. Trust erodes. Your most valuable voices go quiet right when you need them most.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⏱️</div>
+        <h3>Slow time-to-insight</h3>
+        <p>A rep needs a competitor comparison by 2pm. You spend two hours manually combing through forum threads, interview notes, and survey exports.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📉</div>
+        <h3>Vanity metrics</h3>
+        <p>You can report community engagement volume. But you can't yet show how many deals were influenced by the intelligence your community generated.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="section-label">Platform</div>
+    <h2>One platform for the full<br />insights-to-revenue loop</h2>
+    <p class="section-sub">From signal collection to sales enablement, AdvocateIQ handles the workflow that used to live in spreadsheets and Slack threads.</p>
+
+    <div class="feature-rows">
+
+      <!-- Feature 1 -->
+      <div class="feature-row">
+        <div class="feature-text">
+          <h3>Mixed-methods intelligence, unified</h3>
+          <p>Stop context-switching between your survey tool, community platform, and qualitative notes. AdvocateIQ ingests quantitative signals (NPS, CSAT, engagement) and qualitative data (interview transcripts, forum threads, async responses) into a single searchable intelligence layer.</p>
+          <ul class="feature-bullets">
+            <li>Native integrations with Gainsight, Khoros, Discourse, and Vanilla Forums</li>
+            <li>AI-assisted thematic coding of qualitative responses</li>
+            <li>Sentiment trend tracking across segments and use cases</li>
+            <li>Living insight library — searchable by persona, use case, and competitor</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="mock-row">
+            <div class="mock-card">
+              <div class="mock-label">NPS Score</div>
+              <div class="mock-value">72</div>
+              <div class="mock-delta">↑ 8 pts this quarter</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-label">CSAT</div>
+              <div class="mock-value">4.6</div>
+              <div class="mock-delta">↑ 0.3 vs last mo.</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-label">Advocate Engagement</div>
+              <div class="mock-value">84%</div>
+              <div class="mock-delta">↑ 12% MoM</div>
+            </div>
+          </div>
+          <div class="mock-quote">
+            "The onboarding flow still feels clunky — especially the first time you set up integrations. Once you're through it, the value is clear, but that first week is rough."
+          </div>
+          <div class="mock-tag-row">
+            <span class="mock-tag">Onboarding friction</span>
+            <span class="mock-tag">Integration setup</span>
+            <span class="mock-tag">Time-to-value</span>
+            <span class="mock-tag">Segment: Mid-market</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-row reverse">
+        <div class="feature-text">
+          <h3>Pre-sales plays, ready before the call</h3>
+          <p>AdvocateIQ surfaces the right community intelligence at the right stage of the deal — automatically. Reps get objection-handling talk tracks, relevant proof points, and warm reference suggestions without ever filing a ticket to your team.</p>
+          <ul class="feature-bullets">
+            <li>CRM-connected insight delivery (Salesforce, HubSpot)</li>
+            <li>Objection matching from community signals to deal stage</li>
+            <li>Smart reference matching — surfaces advocates by vertical, use case, and bandwidth</li>
+            <li>Competitor intelligence extracted from community discussions</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="mock-card">
+            <div class="mock-label">Deal context: Acme Corp — Evaluation stage</div>
+          </div>
+          <div class="mock-play">
+            <div>
+              <div class="mock-play-text">Objection: "We already use [Competitor X]"</div>
+              <div class="mock-play-sub">3 advocates switched from Competitor X — 94% match to deal profile</div>
+            </div>
+            <span class="badge-green">New</span>
+          </div>
+          <div class="mock-play">
+            <div>
+              <div class="mock-play-text">Reference available: Sarah M., Director of CS</div>
+              <div class="mock-play-sub">Same industry · Available for calls · Last reference: 3 weeks ago</div>
+            </div>
+            <span class="badge-green">Match</span>
+          </div>
+          <div class="mock-play">
+            <div>
+              <div class="mock-play-text">Proof point: "Reduced churn 18% in 6 months"</div>
+              <div class="mock-play-sub">Verified insight · 4 similar accounts · Mid-market segment</div>
+            </div>
+            <span class="badge-green">Verified</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-row">
+        <div class="feature-text">
+          <h3>Post-sales signals that CS can act on</h3>
+          <p>The advocate community is your earliest warning system for churn and your best source of expansion patterns. AdvocateIQ detects engagement shifts and surfaces them as CS plays — before the QBR, not after.</p>
+          <ul class="feature-bullets">
+            <li>Engagement drop alerts mapped to account health scores</li>
+            <li>Adoption success patterns extracted from high-engagement advocates</li>
+            <li>Closed-loop feedback: field signals pushed back to the community</li>
+            <li>Expansion triggers identified from community discussion themes</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="mock-card">
+            <div class="mock-label">Early Warning — Churn Risk</div>
+            <div style="margin-top: 10px; font-size: 0.88rem; color: #6b7280;">3 accounts showing engagement drop > 40% in the last 30 days</div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-label">Expansion Signal Detected</div>
+            <div style="margin-top: 10px; font-size: 0.88rem; color: #6b7280;">12 advocates in the Operations persona are discussing workflow automation — a use case you sell but they haven't adopted</div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-label">Success Pattern: Fast Time-to-Value</div>
+            <div style="margin-top: 10px; font-size: 0.88rem; color: #6b7280;">Top advocates share 3 behaviors in week 1: live onboarding call, Slack integration, and 2+ team members invited</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics">
+  <div class="section-inner">
+    <div class="section-label">Outcomes</div>
+    <h2>Insight analysts using AdvocateIQ report</h2>
+    <div class="metrics-grid">
+      <div class="metric-cell">
+        <div class="metric-number">3.2×</div>
+        <div class="metric-label">faster time-to-insight for sales requests</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-number">61%</div>
+        <div class="metric-label">of reports result in a documented sales play</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-number">40%</div>
+        <div class="metric-label">reduction in advocate reference burnout</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-number">18%</div>
+        <div class="metric-label">win rate lift in insight-assisted deals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="use-cases" id="use-cases">
+  <div class="section-inner">
+    <div class="section-label">Use Cases</div>
+    <h2>Built for every moment in<br />the customer journey</h2>
+    <div class="use-case-grid">
+      <div class="use-case-card">
+        <div class="use-case-icon">🔍</div>
+        <h3>Competitive intelligence</h3>
+        <p>Surface what advocates say about competing products — unprompted, from natural community discussions — and turn it into real-time battlecards for your Sales team.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">📞</div>
+        <h3>Reference management</h3>
+        <p>Match open deals to the right advocates based on industry, use case, and reference frequency — and track advocate participation so no one gets over-tapped.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">📈</div>
+        <h3>Sentiment reporting</h3>
+        <p>Deliver weekly pulse reports and monthly deep-dives — with quantitative trend lines and qualitative theme summaries — tailored by audience: exec, rep, or PM.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">⚠️</div>
+        <h3>Churn early warning</h3>
+        <p>Detect disengagement in your advocate segment before it shows up in renewal conversations. Community signals precede support tickets — use them.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">💡</div>
+        <h3>Product feedback loops</h3>
+        <p>Close the loop between community feedback and product roadmap. Tag insights by theme, push them to Product, and show advocates that their voice drives change.</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">🚀</div>
+        <h3>Expansion plays</h3>
+        <p>Identify discussion themes in your community that map to upsell opportunities — and surface them to CS with context before the next QBR.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">Customers</div>
+    <h2>What Community Insights Analysts say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Before AdvocateIQ, I was producing great reports that lived in a Notion doc nobody opened. Now every rep knows exactly where to find the intelligence they need before a call — and they actually use it."</blockquote>
+        <div class="testimonial-meta">
+          <div class="avatar">JL</div>
+          <div>
+            <div class="meta-name">Jamie L.</div>
+            <div class="meta-role">Community Insights Analyst, Series B SaaS</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The reference matching feature alone saved my most engaged advocates from churning out of the program. I can finally see who's been tapped too often — and protect those relationships."</blockquote>
+        <div class="testimonial-meta">
+          <div class="avatar">MT</div>
+          <div>
+            <div class="meta-name">Morgan T.</div>
+            <div class="meta-role">Head of Customer Advocacy, Enterprise SaaS</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"My VP of Sales used to ask for a competitor comparison and I'd spend three hours pulling it manually. Now I point them to AdvocateIQ and the answer is already there — with advocate quotes to back it up."</blockquote>
+        <div class="testimonial-meta">
+          <div class="avatar">RK</div>
+          <div>
+            <div class="meta-name">Riya K.</div>
+            <div class="meta-role">Community & Insights Lead, PLG Startup</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner">
+    <h2>Your community already has the answers.<br />Let's get them to the field.</h2>
+    <p>See how AdvocateIQ turns superadvocate intelligence into pre-sales and post-sales revenue plays — in 30 minutes.</p>
+    <div class="cta-actions">
+      <button class="btn-white">Get a Demo</button>
+      <button class="btn-outline-white">Talk to an Expert</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Advocate<span>IQ</span></div>
+  <p>© 2026 AdvocateIQ. Built for Community Insights Analysts.</p>
+  <p style="font-size: 0.8rem;">Privacy · Terms · Security</p>
+</footer>
+
+</body>
+</html>
